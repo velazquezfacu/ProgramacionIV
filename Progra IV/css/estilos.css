@@ -14,8 +14,9 @@
 
 body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: var(--color-fondo);
+    background-color: var(--color-fondo); 
     color: var(--color-texto);
+    min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la ventana */
     line-height: 1.6;
 }
 
@@ -31,7 +32,8 @@ img {
 
 /* --- Cabecera (Header) --- */
 .header {
-    background-color: var(--color-primario);
+    /*background-color: var(--color-primario);*/
+    background-color:  black;
     padding: 1rem 5%;
     display: flex;
     justify-content: space-between;
@@ -59,15 +61,52 @@ img {
     color: #ffffff;
 }
 
+/* --- Estilos para el Submenú de Navegación --- */
+.navegacion li {
+    position: relative; /* Necesario para posicionar el submenú */
+}
+
+.navegacion .submenu {
+    display: none; /* Ocultar submenú por defecto */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--color-primario);
+    list-style: none;
+    padding: 1rem 0 0.5rem; /* Aumentamos el padding superior para crear el espacio visual */
+    margin-top: 0; /* Eliminamos el margen que causa el problema */
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    min-width: 180px; /* Ancho mínimo del submenú */
+    z-index: 100;
+    flex-direction: column; /* Para que los items se apilen verticalmente */
+    gap: 0; /* Resetear el gap del ul principal */
+}
+
+.navegacion li:hover > .submenu {
+    display: flex; /* Mostrar submenú al hacer hover sobre el li padre */
+}
+
+.navegacion .submenu li {
+    width: 100%;
+}
+
+.navegacion .submenu a {
+    display: block;
+    padding: 0.75rem 1.5rem;
+    white-space: nowrap; /* Evitar que el texto se rompa en dos líneas */
+}
+
 /* --- Contenido Principal --- */
 .contenido-principal {
     display: flex;
     padding: 2rem 5%;
     gap: 2rem;
+    flex-wrap: wrap; /* Permite que los elementos se apilen si no caben */
 }
 
 .columna-izquierda {
-    flex: 2; /* La columna izquierda ocupará el doble de espacio que la derecha */
+    flex: 1; /* La columna izquierda ocupará el doble de espacio que la derecha */
 }
 
 .columna-izquierda h1 {
@@ -90,6 +129,55 @@ img {
 .columna-derecha img {
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.parrafo-explicacion {
+    flex: 1; /* Ocupa el espacio disponible */
+    min-width: 300px; /* Ancho mínimo para evitar que se comprima demasiado */
+}
+
+.parrafo-explicacion h1 {
+    color: var(--color-secundario);
+    margin-bottom: 1.5rem;
+    font-size: 2.5rem;
+    text-align: left; /* Alineamos a la izquierda para el nuevo layout */
+}
+
+.parrafo-explicacion p {
+    margin-bottom: 1rem;
+}
+
+.trailer-section {
+    flex: 1; /* Ocupa el espacio disponible */
+    min-width: 300px; /* Ancho mínimo */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* --- Estilos para Video/Trailer --- */
+.trailer-section h2 {
+    color: var(--color-secundario);
+    margin-bottom: 1.5rem;
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.video-responsive-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%; /* El contenedor del video ocupará todo el ancho de su columna */
+    padding-top: 56.25%; /* Proporción 16:9, más estándar para videos */
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.video-responsive-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 /* --- Pie de Página (Footer) --- */
@@ -140,6 +228,11 @@ img {
         font-size: 2rem;
         text-align: center;
     }
+
+    .parrafo-explicacion h1 {
+        text-align: center; /* Centramos el título en móvil */
+    }
+
 
     .form {
         padding: 2.5em 1.5em;
@@ -198,6 +291,16 @@ img {
     
     }
 
+    .contact-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .map-section {
+        width: 90%; /* Asegura que el mapa tenga el mismo ancho que el form */
+        margin-top: 2rem; /* Añade un espacio entre el form y el mapa */
+    }
+
 
 }
 
@@ -210,7 +313,7 @@ img {
      background-color: var(--color-fondo); /* Un fondo suave para la página */
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; /* Esto centrará el .contact-wrapper */
     min-height: calc(100vh - 142px); /* Centra verticalmente restando header y footer aprox. */
     padding: 40px 20px; /* Espacio superior/inferior y a los lados */
     box-sizing: border-box;
@@ -322,4 +425,93 @@ img {
 
 .form_submit:hover {
     background-color: #34495e;
+}
+
+/* --- Estilos para la página de contacto con mapa --- */
+.contact-wrapper {
+    display: flex;
+    gap: 5rem;
+    align-items: center;
+    width: 100%;
+    max-width: 1100px; /* Ancho máximo para el conjunto */
+    justify-content: center;
+}
+
+.contact-wrapper .form {
+    flex: 1;
+    max-width: 450px; /* Mantiene el ancho del formulario */
+    margin: 0; /* Resetea el margen si lo tuviera */
+}
+
+.map-section {
+    flex: 1;
+    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.map-title {
+    color: var(--color-secundario);
+    margin-bottom: 1.5rem;
+    font-size: 2.2rem;
+    text-align: center;
+}
+
+.map-responsive {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    padding-top: 100%; /* Proporción 1:1, puedes ajustarlo a 75% para 4:3 */
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.map-responsive iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* --- Estilos para el botón flotante de WhatsApp --- */
+.whatsapp-float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+    background-color: #25D366;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    animation: floatAnimation 2.5s ease-in-out infinite;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+    background-color: #128C7E;
+    animation-play-state: paused; /* Pausa la animación al pasar el cursor */
+}
+
+/* Keyframes para la animación de flotar */
+@keyframes floatAnimation {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+    100% {
+        transform: translateY(0);
+    }
 }
